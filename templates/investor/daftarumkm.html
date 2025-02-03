@@ -1,0 +1,161 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Daftar UMKM{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="porto">
+    <div class="daftarumkm1">
+        <h2 style="margin-top: 20px;">Daftar UMKM</h2>
+
+        <div class="filter">
+            Filter: 
+            <a href="?filter=Semua" {% if selected_filter == 'Semua' %}class="active"{% endif %}>Semua</a>
+            <a href="?filter=Kuliner" {% if selected_filter == 'Kuliner' %}class="active"{% endif %}>Kuliner</a>
+            <a href="?filter=Sembako" {% if selected_filter == 'Sembako' %}class="active"{% endif %}>Sembako</a>
+            <a href="?filter=Jasa" {% if selected_filter == 'Jasa' %}class="active"{% endif %}>Jasa</a>
+        </div>
+
+        <div class="umkm-list">
+            {% if umkm_list %}
+                {% for umkm in umkm_list %}
+                    <div class="umkm-item" onclick="location.href='{% url 'linkbiz:tentangmitra' umkm.id %}'" style="cursor: pointer;">
+                        <img src="{{ umkm.foto_umkm.url }}" alt="{{ umkm.nama_umkm }}">
+                        <div class="umkm-info">
+                            <h3>{{ umkm.nama_umkm }}</h3>
+                            <p>{{ umkm.Jenis_umkm }}</p>
+                            <p class="location">{{ umkm.alamat_umkm }}</p>
+                            <p class="funding-needed">Membutuhkan Modal: Rp {{ umkm.dana }}</p>
+                        </div>
+                        <button class="btn-profile" onclick="event.stopPropagation(); openPopup('{{ umkm.nama_umkm }}', '{{ umkm.foto_umkm.url }}', '{{ umkm.deskripsi }}', '{{ umkm.dana }}')">Lihat Profile</button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Tidak ada UMKM yang tersedia untuk didanai.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<style>
+    /* Popup container */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0; 
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        transition: opacity 0.3s ease;
+    }
+
+    /* Popup content */
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Close button */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .close-btn:hover {
+        color: #333;
+    }
+
+    /* Image slider styling */
+    .image-slider img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    /* Description and funding */
+    .popup-description {
+        font-size: 10px;
+        color: #555;
+        margin: 15px 0;
+    }
+
+    .funding span {
+        font-size: 16px;
+        font-weight: bold;
+        color: #4FAA55;
+    }
+</style>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span id="closePopup" class="close-btn">&times;</span>
+        <h2 id="popup-title"></h2>
+        <div class="image-slider">
+            <img id="popup-image" src="" alt="Gambar UMKM">
+        </div>
+        <p id="popup-description" class="popup-description"></p>
+        <p class="funding">
+            <span id="popup-funding"></span>
+        </p>
+    </div>
+</div>
+
+<script>
+    // Membuka popup dengan data UMKM
+    function openPopup(nama, foto, deskripsi, dana) {
+        event.stopPropagation();
+        document.getElementById("popup-title").innerText = nama;
+        document.getElementById("popup-image").src = foto;
+        document.getElementById("popup-description").innerText = deskripsi;
+        document.getElementById("popup-funding").innerText = "Membutuhkan Dana: Rp " + dana;
+
+        const popup = document.getElementById("popup");
+        popup.style.display = "flex";
+        setTimeout(() => popup.style.opacity = "1", 50);
+    }
+
+    // Menutup popup
+    document.getElementById("closePopup").addEventListener("click", function() {
+        closePopup();
+    });
+
+    // Menutup popup dengan klik di luar area
+    document.getElementById("popup").addEventListener("click", function(event) {
+        if (event.target === this) {
+            closePopup();
+        }
+    });
+
+    // Fungsi untuk menutup popup
+    function closePopup() {
+        const popup = document.getElementById("popup");
+        popup.style.opacity = "0";
+        setTimeout(() => popup.style.display = "none", 300);
+    }
+</script>
+{% endblock %}

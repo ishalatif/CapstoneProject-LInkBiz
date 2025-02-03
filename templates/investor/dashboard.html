@@ -1,0 +1,124 @@
+{% extends 'investor/0baseinvestor.html' %}
+{% load humanize %}
+
+{% block title %}Dashboard - LinkBiz{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<div class="dashboard1">
+    <div class="dashboard-container">
+        <img src="{% static 'assets/hands.png' %}" alt="hand" width="45" height="44"
+            class="hi-margin" />
+        <div class="dashboard-text">
+            <p class="dashboard-text01">Hi, Selamat datang!</p>
+        </div>
+    </div>
+
+    
+
+    <div class="sectionds1">
+        <div class="dashboard-title">
+            <div class="sectionds1-titles">
+                <p class="sectionds1-title1">Total Pendanaan</p>
+                <p class="sectionds1-title2">Rp {{total_dana_mendanai|intcomma}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sectionds2">
+    <div class="left-box">
+        <p class="dashboard-text-secondary">Total Mitra Pendanaan</p>
+        <p class="dashboard-subtext">Kamu sedang mendanai :</p>
+        <div class="sisa-pokok-container">
+            <p class="sisa-pokok">{{jumlah_umkm_didanai}} Mitra</p>
+        </div>
+    </div>
+    <div class="right-box">
+        <div>
+            <div class="dashboard-text26">
+                <p class="dashboard-text-secondary">Bagi Hasil yang di Terima</p>
+            </div>
+            <div class="right-box-text2">
+                <p class="c_dashboard-text25">Rp {{ total_lancar|intcomma }}</p>
+            </div>
+        </div>
+        <div class="icon-container"> 
+               <img src="{% static 'assets/3eb8f096c40c214a3453d73d78fd2ff4.png' %}" class="imggreen" />
+        </div>
+    </div>
+</div>
+<hr class="divider">
+<sectionds class="sectionds5">
+    <p class="total-textds">Webinar Mengoptimalkan Potensi Bisnis melalui Linkbiz</p>
+    <div class="button-dashboardblank">
+        {% for webinar in webinars %}
+        <button class="custom-button-dashboard" onclick="bukaPopupWebinar({{ forloop.counter0 }})">
+            <img src="{{ webinar.gambar.url }}" alt="Webinar Gambar {{ forloop.counter }}">
+        </button>        
+        {% endfor %}
+    </div>
+</sectionds>
+
+<div id="popupWebinar" class="popupds" style="display:none;">
+    <div class="popupds-content">
+        <span class="closeds" onclick="tutupPopupWebinar()">&times;</span>
+        <div class="popupds-container">
+            <div class="popupds-left">
+                <img id="popupWebinarGambar" src="" alt="Webinar Gambar" class="popupds-image">
+            </div>
+            <div class="popupds-right">
+                <h1 id="popupWebinarJudul"></h1>
+                <hr><br>
+                <p id="popupWebinarDeskripsi" style="font-size: 18px;"></p>
+                <p><strong>Waktu: </strong><span id="popupWebinarWaktu"></span></p>
+                <p><strong>Pembicara: </strong><span id="popupWebinarPembicara"></span></p>
+                <p><strong>Link Zoom: </strong><a id="popupWebinarLinkZoom" href="" target="_blank"></a></p>
+                <p><strong>Meeting ID: </strong><span id="popupWebinarMeetingID"></span></p>
+                <p><strong>Kata Sandi: </strong><span id="popupWebinarKataSandi"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<br>
+</section>
+<script>
+    const dataWebinar = [
+    {% for webinar in webinars %}
+    {
+        gambar: '{{ webinar.gambar.url }}',  // Pastikan URL gambar benar
+        judul: '{{ webinar.judul|escapejs }}',
+        deskripsi: '{{ webinar.deskripsi|escapejs }}',
+        waktu: '{{ webinar.tanggal|date:"d F Y" }} {{ webinar.waktu|time:"H:i" }} WIB',
+        pembicara: '{{ webinar.pembicara|escapejs }}',
+        linkZoom: '{{ webinar.link_zoom }}',
+        meetingID: '{{ webinar.meeting_id }}',
+        kataSandi: '{{ webinar.passcode }}'
+    },
+    {% endfor %}
+];
+
+    
+function bukaPopupWebinar(index) {
+    const webinar = dataWebinar[index];
+    document.getElementById('popupWebinar').style.display = 'flex';
+    document.getElementById('popupWebinarGambar').src = webinar.gambar;  // Akses langsung gambar
+    document.getElementById('popupWebinarJudul').innerText = webinar.judul;
+    document.getElementById('popupWebinarDeskripsi').innerText = webinar.deskripsi;
+    document.getElementById('popupWebinarWaktu').innerText = webinar.waktu;
+    document.getElementById('popupWebinarPembicara').innerText = webinar.pembicara;
+    document.getElementById('popupWebinarLinkZoom').href = webinar.linkZoom;
+    document.getElementById('popupWebinarLinkZoom').innerText = webinar.linkZoom;
+    document.getElementById('popupWebinarMeetingID').innerText = webinar.meetingID;
+    document.getElementById('popupWebinarKataSandi').innerText = webinar.kataSandi;
+}
+
+    
+    function tutupPopupWebinar() {
+        document.getElementById('popupWebinar').style.display = 'none';
+    }
+    </script>
+{% endblock %}

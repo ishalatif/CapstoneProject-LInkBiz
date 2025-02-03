@@ -1,0 +1,166 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Jumlah Pendanaan{% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+    .popupbukti {
+    display: none; /* Sembunyikan popup */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Background transparan */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popupbukti-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+</style>
+<div class="dnaiskrng">
+    <div class="danaiskrng">
+        <h2 style="margin-top: 20px; width: 22%;">Jumlah Pendanaan</h2>
+        <br>
+        <!-- <h1>Rp {{ umkm.dana }}</h1> -->
+<br>
+        <div class="payment-info">
+            <h3>Informasi Pembayaran</h3>
+            <p>Nama UMKM: <strong> {{ umkm.nama_umkm }}</strong></p>
+            <p>Nominal yang akan diInvestasikan: <strong> Rp {{umkm.dana}}</strong></p>
+        </div>
+        <br>
+        <div class="paymentdanaiskrng-methods">
+            <div class="paymentdanaiskrng-method">
+                <h3>Virtual Account</h3>
+                <div class="account-item">
+                    <img src="{% static 'assets/LOGO LINKBIZ FIX.png' %}" alt="logo-linkbiz">
+                    <p>983493874938479</p>
+                    <input type="radio" id="va1" name="payment_method" value="Virtual Account 983493874938479">
+                    <label for="va1" class="bayar-label"></label>
+                </div>
+                <div class="account-item">
+                    <img src="{% static 'assets/LogoBCA.png' %}" alt="logo-BCA">
+                    <p class="BCA">983493874938479</p>
+                    <input type="radio" id="bca" name="payment_method" value="BCA 983493874938479">
+                    <label for="bca" class="bayar-label"></label>
+                </div>
+            </div>
+        
+            <div class="paymentdanaiskrng-method">
+                <h3>Pembayaran</h3>
+                <div class="paymentdanaiskrng-option">
+                    <img src="{% static 'assets/LogoGoPay.png' %}" alt="logo-GoPay">
+                    <p>088637637251 ( +5000 )</p>
+                    <input type="radio" id="gopay" name="payment_method" value="GoPay 088637637251">
+                    <label for="gopay" class="bayar-label"></label>
+                </div>
+                <div class="paymentdanaiskrng-option">
+                    <img src="{% static 'assets/LogoShopee.png' %}" alt="logo-ShopeePay">
+                    <p>088637637252 ( +5000 )</p>
+                    <input type="radio" id="shopee" name="payment_method" value="ShopeePay 088637637252">
+                    <label for="shopee" class="bayar-label"></label>
+                </div>
+                <div class="paymentdanaiskrng-option">
+                    <img src="{% static 'assets/LogoDana.png' %}" alt="logo-Dana">
+                    <p>088637637253 ( +5000 )</p>
+                    <input type="radio" id="dana" name="payment_method" value="Dana 088637637253">
+                    <label for="dana" class="bayar-label"></label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-to-home">
+            <a href="javascript:void(0)" id="bayarBtn">Bayar</a>
+        </div>
+        
+       <!-- Popup for Bukti Transfer -->
+        <div class="popupbukti" id="popupbukti">
+            <div class="popupbukti-content">
+                <span id="closePopup">&times;</span>
+                <h3>Unggah Bukti Transfer</h3>
+                <hr>
+                <p>Nama UMKM: <span id="namaUMKM">{{ umkm.nama_umkm }}</span></p>
+                <p>Nominal: <span id="nominalAmount">{{ umkm.dana }}</span></p>
+                
+                <form action="{% url 'linkbiz:unggah_pendanaan' umkm.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="nominal_dana">Nominal Pendanaan:</label>
+                    <input type="number" name="nominal_dana" id="nominal_dana" class="form-control" 
+                        value="{{ umkm.dana|cut:'.' }}" readonly>
+                    <br>
+                    
+                    <label for="bukti_transfer">Unggah Bukti Transfer:</label>
+                    <input type="file" name="bukti_transfer" id="bukti_transfer" class="form-control-file" required>
+                    <br>
+                
+                    <button type="submit" class="btn btn-primary">Unggah</button>
+                </form>
+            </div>
+        </div>
+        <div id="popupSuccess" class="popupbukti" style="display: none;">
+            <div class="popupbukti-content" style="background-color: #5942FE; color: white; text-align: center;">
+                <p style="color: #ffffff; font-size: 24px; font-weight: 600;">Pembayaran Berhasil</p>
+                <img src="{% static 'assets/checkl.png' %}" style="width: 80px; height: 80px;" alt="logo-Dana">
+                <p style="color: #ffffff; margin-bottom: -10px;">Jumlah</p>
+                <h3 style="margin: 0; color: #ffffff; margin-bottom: -10px;">Rp {{ umkm.dana }}</h3> <!-- Color for Nominal -->
+                <br>
+                <button id="closeSuccessPopup" style="background-color: white; color: #5942FE; padding: 10px; border: none; cursor: pointer;">
+                    Kembali ke Portofolio
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+// Get the modal
+var popupbukti = document.getElementById("popupbukti");
+
+// Get the button that opens the modal
+var bayarBtn = document.getElementById("bayarBtn");
+
+// Get the <span> element that closes the modal
+var closePopup = document.getElementById("closePopup");
+
+// When the user clicks on the button, open the modal
+bayarBtn.onclick = function() {
+    popupbukti.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+closePopup.onclick = function() {
+    popupbukti.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == popupbukti) {
+        popupbukti.style.display = "none";
+    }
+}
+
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah form dikirimkan
+
+    // Tampilkan popup "Pembayaran Berhasil"
+    var popupSuccess = document.getElementById('popupSuccess');
+    popupSuccess.style.display = 'flex';
+
+    // Setelah popup ditutup, kirimkan form
+    document.getElementById('closeSuccessPopup').addEventListener('click', function() {
+        window.location.href = "{% url 'linkbiz:portofolio' %}";
+        // Kirim form setelah popup ditutup
+        event.target.submit();
+    });
+});
+</script>
+{% endblock %}

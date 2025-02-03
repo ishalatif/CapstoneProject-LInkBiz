@@ -1,0 +1,118 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Pengaturan{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<section class="containerpengaturan">
+    <div class="container_pengaturan">
+        <h2 style="margin-left: 30px; margin-top: 20px;">Pengaturan</h2>
+
+        <div class="pengaturan-row1">
+            {% if profile_investor.foto %}
+                <img id="profile-img" src="{{ profile_investor.foto.url }}" alt="profile-img" class="pengaturan-profile-img" />
+            {% else %}
+                <img id="profile-img" src="{% static 'images/default-profile.png' %}" alt="default-profile-img" class="pengaturan-profile-img" />
+            {% endif %}
+            <br />
+
+            <h1 style="text-align: left; margin-left: 10px; font-size: 25px;">INFORMASI LAINNYA</h1>
+            <div class="pengaturan-row2">
+              <div class="pengaturan-document-item">
+                <p>Pusat Bantuan</p>
+                <a href="{% url 'linkbiz:pusban' %}"S><i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+              <div class="pengaturan-document-item">
+                <p>Kebijakan Privasi</p>
+                <a href="javascript:void(0);" onclick="showPopup('popup-kebijakan-privasi')">
+                    <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+              <div class="pengaturan-document-item">
+                <p>Resiko Pendanaan</p>
+                <a href="javascript:void(0);" onclick="showPopup('popup-resiko')">
+                    <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        
+
+    <!-- Popups -->
+    <div id="popup-kebijakan-privasi" class="pengaturan-popup">
+        <div class="pengaturan-popup-content">
+            <span class="pengaturan-close-popup" onclick="closePopup('popup-kebijakan-privasi')">&times;</span>
+            <h1>Kebijakan Privasi</h1>
+            <p>Pelajari lebih lanjut tentang kebijakan privasi kami.</p>
+
+            <div class="pengaturan-dropdown">
+                <div class="pengaturan-dropdown-header" onclick="toggleDropdown('dropdown-privasi1', this)">
+                    <strong>Keamanan Data</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="pengaturan-dropdown-content" id="dropdown-privasi1">
+                    <p>Kami menjaga keamanan data Anda dengan teknologi enkripsi dan kebijakan internal yang ketat.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pengaturan-dropdown">
+                <div class="pengaturan-dropdown-header" onclick="toggleDropdown('dropdown-privasi2', this)">
+                    <strong>Penggunaan Data</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="pengaturan-dropdown-content" id="dropdown-privasi2">
+                    <p>Data Anda digunakan untuk memberikan layanan, memproses transaksi, dan meningkatkan pengalaman pengguna.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pengaturan-popup" id="popup-resiko">
+      <div class="pengaturan-popup-content">
+          <span class="pengaturan-close-popup" onclick="closePopup('popup-resiko')">&times;</span>
+          <h1>Informasi Resiko Pendanaan</h1>
+          <p>Pelajari lebih lanjut tentang risiko pendanaan.</p>
+    
+          <!-- Dropdown 1 -->
+          <div class="pengaturan-dropdown">
+              <div class="pengaturan-dropdown-header" onclick="toggleDropdown('dropdown-resiko1', this)">
+                  <strong>Apa itu Resiko Pendanaan?</strong>
+                  <span class="arrow">▼</span>
+              </div>
+              <div class="pengaturan-dropdown-content" id="dropdown-resiko1">
+                  <p>Risiko pendanaan bagi Usaha Mikro, Kecil, dan Menengah (UMKM) meliputi risiko kredit, risiko likuiditas, risiko operasional, risiko pasar, risiko regulasi, risiko inflasi, risiko suku bunga, risiko akses modal, dan risiko reputasi.</p>
+              </div> 
+          </div>
+      </div>
+    </div>
+</section>
+
+<script>
+function showPopup(popupId) {
+    document.getElementById(popupId).style.display = 'flex';
+}
+function closePopup(popupId) {
+    document.getElementById(popupId).style.display = 'none';
+}
+function toggleDropdown(dropdownId, element) {
+    const content = document.getElementById(dropdownId);
+    const isVisible = content.style.display === 'block';
+    const arrow = element.querySelector('.arrow');
+    content.style.display = isVisible ? 'none' : 'block';
+    arrow.textContent = isVisible ? '▼' : '▲';
+}
+const uploadImgInput = document.getElementById('upload-img');
+const profileImg = document.getElementById('profile-img');
+uploadImgInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            profileImg.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+</script>
+{% endblock %}

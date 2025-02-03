@@ -1,0 +1,96 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %} Profile {% endblock%} 
+
+{% block content %} 
+{% load static %}
+    <div class="">
+    <h2 style="margin-top: 12px">Profile</h2>
+    </div>
+    <div class="profileinvestor">
+    <div class="row1">
+        <img
+        src="{% if profile_investor.foto %}{{ profile_investor.foto.url }}{% else %}{% static 'assets/LinkBiz.jpg' %}{% endif %}"
+        alt="profile-img"
+        />
+        <br />
+
+        <!-- Form untuk upload foto -->
+        <form method="POST" enctype="multipart/form-data" style="margin-left: 5px">
+        <p
+            style="
+            text-align: center;
+            margin-bottom: -10px;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: 600;
+            "
+        >
+            Ganti Foto Profile
+        </p>
+        {% csrf_token %}
+        <input type="file" name="foto" accept="image/*" id="upload-img" />
+        <button type="submit" style="margin-top: 10px">Perbarui Foto</button>
+        </form>
+    </div>
+    <br />
+    <h3>INFORMASI AKUN</h3>
+    <div class="row2">
+        <div class="left-align">
+        <p>Email :</p>
+        <p>Password :</p>
+        </div>
+        <div class="right-align">
+        <p>{{ profile_investor.email }}</p>
+        <p class="right-align">
+            <a href="{% url 'linkbiz:lupa_password' %}">Ganti Password</a>
+        </p>
+        </div>
+    </div>
+    <br />
+    <h3>INFORMASI PRIBADI</h3>
+    <p>
+        Untuk memperbarui informasi atau data berikut, hubungi customer di support
+        @LinkBiz.com
+    </p>
+    <table class="row3">
+        <tr>
+        <th>Nama Lengkap</th>
+        <th>No. Handphone</th>
+        <th>KTP</th>
+        <th>No. NPWP</th>
+        </tr>
+        <tr>
+        <td>{{ profile_investor.fullname }}</td>
+        <td>{{ profile_investor.phone }}</td>
+        <td>
+            {% if profile_investor.ktp %}
+            <a href="{{ profile_investor.ktp.url }}" target="_blank">Lihat KTP</a>
+            {% else %} Belum diupload {% endif %}
+        </td>
+        <td>{{ profile_investor.npwp }}</td>
+        </tr>
+    </table>
+    <br />
+    <h3>DOKUMEN SAYA</h3>
+    <div class="row4">
+        <div class="document-item">
+        <p>Surat Kuasa Perjanjian Pendanaan</p>
+        {% if profile_investor.surat_kuasa %}
+        <a href="{{ profile_investor.surat_kuasa.url }}" target="_blank">Unduh</a>
+        {% else %}
+        <span>Dokumen belum tersedia</span>
+        {% endif %}
+        </div>
+        <div class="document-item">
+        <p>Perjanjian Penyaluran Pendanaan</p>
+        {% if profile_investor.perjanjian_pendanaan %}
+        <a href="{{ profile_investor.perjanjian_pendanaan.url }}" target="_blank"
+            >Unduh</a
+        >
+        {% else %}
+        <span>Dokumen belum tersedia</span>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

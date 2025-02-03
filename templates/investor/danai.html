@@ -1,0 +1,55 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Jumlah Pendanaan{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="porto">
+    <h2 style="margin-top: 20px; width: 21%;">Jumlah Pendanaan</h2>
+    <div class="danai1">
+        <div class="asset-header">
+            <h3 style="color: rgb(8, 171, 8);">Rp. 5.000.000</h3>
+        </div>
+        <br>
+    </div>
+    <div class="danai3">
+        <div class="danai4">
+            <br>
+            <div class="danai5">
+                <div class="label">Dana Tersedia</div>
+                <div class="value">2.000.000</div>
+            </div>
+            <div class="danai5">
+                <div class="label">Bagi Hasil</div>
+                <div class="value">10%/Tahun</div>
+            </div>
+            <div class="note">*Sebelum dikurangi pemotongan PPh23</div>
+            <div class="danai5">
+                <div class="label">Tenor</div>
+                <div class="value">12 Bulan</div>
+            </div>
+            <div class="danai5">
+                <div class="label">Credit Score</div>
+                <div class="value">A</div>
+            </div>
+            <div class="danai5">
+                <div class="label">Estimasi Total Bagi Hasil</div>
+                <div class="value">Rp. 550.000/Tahun</div>
+            </div>
+            <div class="lol">
+                <div class="checkbox-danai4">
+                    <input type="checkbox" id="approval">
+                    <label for="approval">
+                        Klik di sini untuk menyetujui pendistribusian dana ke daftar mitra.
+                        <a href="{% url 'linkbiz:daftarumkm' %}">Lihat daftar mitra.</a>
+                    </label>
+                </div>
+                <a href="" class="category-button">Danai Sekarang</a>
+                <br>
+                <br>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Laporan Bulanan{% endblock %}
+
+
+{% block content %}
+{% load humanize %}
+{% load static %}
+<div class="aktv">
+  <div class="">
+    <h2 style="margin-top: 20px; width: 1px;">Aktivitas</h2>
+  </div>
+  <br/>
+  <div class="aktivitas">
+    <div class="actions">
+      <!-- <div class="action">
+        <div class="action-container">
+          <i class="fas fa-wallet"></i>
+          <p>Top Up</p>
+        </div>
+      </div> -->
+      <a href="{% url 'linkbiz:withdraw' %}">
+        <div class="action">
+          <div class="action-container">
+            <i class="fas fa-university"></i>
+            Withdraw
+          </div>
+        </div>
+      </a>
+      <a href="{% url 'linkbiz:laporanbulanan' %}">
+        <div class="action">
+          <div class="action-container">
+            <i class="fas fa-file-alt"></i>
+            Laporan
+          </div>
+        </div>
+      </a>
+      <a href="{% url 'linkbiz:kategoritampil' %}">
+        <div class="action">
+          <div class="action-container">
+            <i class="fas fa-history"></i>
+            Histori
+          </div>
+        </div>
+      </a>
+    </div>
+    <br />
+    <a href="{% url 'linkbiz:ringkasan' %}">
+      <button class="summary-button">Ringkasan Transaksi</button>
+    </a>
+    <br />
+  </div>
+</div>
+<br>
+<div class="transaction-history">
+  <h4>Histori Transaksi</h4>
+  <p class="subheading">Histori Transaksi Anda selama 1 bulan Terakhir</p>
+
+  <table class="transaction-table">
+    <thead>
+      <tr>
+        <th>Mitra</th>
+        <th style="text-align: left;">Dana yang Diberikan</th>
+        <th style="text-align: left;">Tanggal Pendanaan</th>
+        <th>Bukti Transaksi</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for pendanaan in pendanaan_list %}
+          <tr>
+            <td>{{ pendanaan.umkm.nama_umkm }}</td>
+            <td>Rp {{ pendanaan.nominal_dana|intcomma }}</td>
+            <td>{{ pendanaan.tanggal_pendanaan|date:"d F Y" }}</td>
+            <td>
+              {% if pendanaan.bukti_transfer %}
+                <a href="{{ pendanaan.bukti_transfer.url }}" target="_blank">Lihat Bukti</a>
+              {% else %}
+                Tidak Ada Bukti
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">Anda belum melakukan pendanaan</td>
+          </tr>
+          {% endfor %}
+    </tbody>
+  </table>
+  <br />
+</div>
+
+{% endblock %}

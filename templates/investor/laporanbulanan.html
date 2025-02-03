@@ -1,0 +1,292 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Laporan Bulanan{% endblock %}
+
+{% block content %}
+{% load static %}
+{% csrf_token %}
+<link rel="stylesheet" href="{% static 'css/laporan_bulanan.css' %}">
+
+<div class="lapbul">
+    <div>
+        <h2 class="header-title">Laporan Bulanan</h2>
+    </div>
+
+    <div class="aktivitas">
+        <div class="saldo">
+            <h3>SALDO TERSEDIA</h3>
+            <p class="saldo-amount">Rp. 0</p>
+        </div>
+        <div class="actions">
+            <div class="action">
+                <div class="action-container">
+                    <i class="fas fa-university"></i>
+                    <p>Withdraw</p>
+                </div>
+            </div>
+            <div class="action">
+                <div class="action-container" onclick="scrollToLaporan()">
+                    <i class="fas fa-file-alt"></i>
+                    <p>Laporan</p>
+                </div>
+            </div>
+            <div class="action">
+                <div class="action-container">
+                    <i class="fas fa-history"></i>
+                    <p>Histori</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="summary-button">Ringkasan Transaksi</button>
+    </div>
+
+    <!-- Dropdown for selecting UMKM -->
+    <div class="dropdown-container">
+        <div class="dropdown">
+            <button class="dropdown-button">Pilih UMKM</button>
+            <div class="dropdown-content">
+                {% for umkm in daftar_umkm %}
+                    <a href="#" onclick="selectUMKM('{{ umkm.nama_umkm }}')">{{ umkm.nama_umkm }}</a>
+                {% empty %}
+                    <p>Tidak ada UMKM tersedia</p>
+                {% endfor %}
+            </div>
+        </div>
+    
+        <!-- Dropdown for selecting the month -->
+        <div class="dropdown">
+            <button class="dropdown-bulan">Pilih Bulan</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="toggleReport('Januari')">Januari</a>
+                <a href="#" onclick="toggleReport('Februari')">Februari</a>
+                <a href="#" onclick="toggleReport('Maret')">Maret</a>
+                <a href="#" onclick="toggleReport('April')">April</a>
+                <a href="#" onclick="toggleReport('Mei')">Mei</a>
+                <a href="#" onclick="toggleReport('Juni')">Juni</a>
+                <a href="#" onclick="toggleReport('Juli')">Juli</a>
+                <a href="#" onclick="toggleReport('Agustus')">Agustus</a>
+                <a href="#" onclick="toggleReport('September')">September</a>
+                <a href="#" onclick="toggleReport('Oktober')">Oktober</a>
+                <a href="#" onclick="toggleReport('November')">November</a>
+                <a href="#" onclick="toggleReport('Desember')">Desember</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="transaction-history" id="transactionHistory" style="display: none;">
+        <h4 id="laporanBulanan">Laporan Bulanan</h4>
+        <p class="history-description">Lihat Laporan Usaha UMKM Setiap Bulan dan Berikan Komentar agar UMKM berkembang</p>
+
+        <table class="report-table" id="reportTable">
+            <thead>
+                <tr>
+                    <th>Laporan Tahun 2024</th>
+                    <th>Komentar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows hidden by default -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CSS for Horizontal Dropdowns -->
+<style>
+    .dropdown-container {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-button {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: 20px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 10px 0;
+        z-index: 1;
+        border-radius: 5px;
+        max-height: 200px; /* Membatasi tinggi dropdown */
+        overflow-y: auto;  /* Menambahkan scrollbar jika konten lebih tinggi dari max-height */
+        width: 200px; /
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-button {
+        background-color: #0056b3;
+    }
+
+    .report-table tbody tr {
+        display: none;
+    }
+
+    .dropdown-bulan {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+    const reportTable = document.getElementById("reportTable");
+    const transactionHistory = document.getElementById("transactionHistory");
+
+    // Array bulan untuk laporan
+    const months = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    let selectedUMKM = '';  // Variabel untuk melacak UMKM yang dipilih
+
+    // Fungsi untuk memilih UMKM dan memulai ulang dropdown bulan
+    function selectUMKM(umkmName) {
+        selectedUMKM = umkmName;
+
+        // Sembunyikan laporan yang ada sebelumnya
+        const rows = reportTable.querySelectorAll("tbody tr");
+        rows.forEach(row => row.style.display = "none");
+
+        // Tampilkan dropdown bulan dan sembunyikan tabel laporan
+        transactionHistory.style.display = "block";
+    }
+
+    // Fungsi untuk membuat baris laporan untuk setiap bulan
+    function createRow(month, year) {
+        const row = document.createElement("tr");
+        row.setAttribute("data-month", month);
+        row.innerHTML = `
+            <td>
+                <i class="fas fa-file-alt icon"></i> 
+                <a href="/media/laporan_keuangan/Laporan_Bulanan.pdf" target="_blank">Bulan ${month} ${year}</a>
+                <i class="fas fa-download download-icon"></i>
+            </td>
+            <td>
+                <i class="fas fa-comment-dots comment-icon"></i>
+                <input type="text" class="comment-input" placeholder="Tambahkan komentar...">
+                <i class="fas fa-paper-plane send-icon" data-sent="false" onclick="sendComment(this, '${month}', '${year}')"></i>
+                <div class="comment-list"></div>
+            </td>
+        `;
+        reportTable.querySelector("tbody").appendChild(row);
+    }
+
+    // Inisialisasi laporan untuk semua bulan
+    function initializeReports() {
+        const currentYear = new Date().getFullYear();
+        months.forEach(month => createRow(month, currentYear));
+    }
+
+    // Menampilkan laporan berdasarkan bulan yang dipilih
+    function toggleReport(month) {
+        const rows = reportTable.querySelectorAll("tbody tr");
+
+        // Sembunyikan semua laporan
+        rows.forEach(row => {
+            row.style.display = "none";
+        });
+
+        // Tampilkan laporan bulan yang dipilih
+        const selectedRow = reportTable.querySelector(`tbody tr[data-month="${month}"]`);
+        if (selectedRow) {
+            selectedRow.style.display = "table-row";
+        }
+    }
+
+    // Kirim komentar dan tampilkan
+    function sendComment(element, month, year) {
+        const inputElement = element.previousElementSibling;
+        const commentText = inputElement.value.trim();
+
+        if (!commentText) {
+            alert("Komentar tidak boleh kosong!");
+            return;
+        }
+
+        fetch('/save-comment/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: new URLSearchParams({
+                'comment_text': commentText,
+                'month': month,        // Bulan yang dipilih
+                'year': year,          // Tahun yang dipilih
+                'umkm': selectedUMKM   // UMKM yang dipilih
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal mengirim komentar.");
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                const commentList = element.parentElement.querySelector('.comment-list');
+                const newComment = document.createElement("div");
+                newComment.className = "comment-item";
+                newComment.textContent = data.comment.text;
+                commentList.appendChild(newComment);
+
+                element.setAttribute("data-sent", "true");
+                element.style.color = "green";
+                inputElement.value = "";
+            } else {
+                alert(data.message || "Terjadi kesalahan.");
+            }
+        })
+        .catch(error => {
+            alert("Error: " + error.message);
+        });
+    }
+
+    // Mengambil nilai dari cookie
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Inisialisasi laporan bulan
+    initializeReports();
+</script>
+
+{% endblock %}
+
+

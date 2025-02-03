@@ -1,0 +1,52 @@
+{% extends 'investor/0baseinvestor.html' %} 
+{% load humanize %}
+{% block title %}Tentang Mitra -LinkBiz{% endblock %} {% block content %} {% load static %}
+<div class="porto">
+  <h2 style="margin-top: 20px; width: 17%;">Tentang UMKM</h2>
+
+  <div class="profile-card">
+    <div class="profile">
+      <div class="avatar">
+        <img src="{{ umkm.foto_umkm.url }}" alt="{{ umkm.nama_umkm }}">
+      </div>
+      <div class="info">
+        <h3>{{ umkm.nama_umkm }}</h3>
+            <p>{{umkm.Jenis_umkm}}</p>
+            <p class="location" style="color: red; font-size: 15px;">
+                <span><i class="fas fa-map-marker-alt"></i></span> {{ umkm.alamat_umkm }}
+            </p>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail">
+        <p>MODAL</p>
+            <h3>Rp {{ umkm.dana }}</h3>
+      </div>
+      <div class="detail">
+        <p>% BAGI HASIL</p>
+            <h3>{{ umkm.bagi_hasil }}</h3>
+      </div>
+      <div class="detail">
+        <p>TENOR</p>
+            <h3>{{umkm.tenor}}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="tabs">
+    <a href="{% url 'linkbiz:tentangmitra' umkm.id %}" class="tab active">TENTANG UMKM</a>
+    <a href="{% url 'linkbiz:proposalmitra' umkm.id %}" class="tab">DOKUMEN UMKM</a>
+  </div>
+  <div class="containertm">
+    <p><span>Tenor Pendanaan</span>Per Bulan</span></p>
+    <p><span>Bagi Hasil</span><span>Rp {{ bagi_hasil|intcomma }}</span></p>
+    <p><span>Jenis Pendanaan</span><span>Mingguan</span></p>
+    <p><span>Jumlah Angsuran</span><span>Rp {{ jumlah_angsuran|intcomma }}</span></p>
+    <p><span>Modal</span><span>Rp {{ modal|intcomma }}</span></p>
+
+    <a href="{% url 'linkbiz:danaisekarang' umkm.id %}">
+      <button class="btn-fund">Modalkan Mitra</button>
+    </a>
+  </div>
+  <br>
+</div>
+{% endblock %}

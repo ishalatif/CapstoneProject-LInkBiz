@@ -1,0 +1,129 @@
+{% extends 'homepage/0base.html' %}
+{% load static %}
+
+{% block head_register2 %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+            padding: 0;
+            margin: 0;
+            background-color: #ffffff;
+        }
+		.register-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 100px); /* Menyisakan ruang untuk navbar dan footer */
+            background-color: #ffffff;
+            margin-top: 70px;
+        }
+        .register-section h1 {
+            font-size: 2.5rem;
+            color: #4d59f0;
+            margin-bottom: 0;
+        }
+        .register-section p {
+            font-size: 1rem;
+            color: #000000;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .register-box {
+            background-color: #fff;
+            padding: 40px;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .register-box label {
+            display: block;
+            text-align: left;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #4d59f0;
+        }
+        .input, .bank-input {
+            margin-bottom: 5px;
+        }
+        .register-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .bank-input .option {
+            display: flex;
+            align-items: center;
+        }
+        .bank-input .option input {
+            border-radius: 5px 0 0 5px;
+            border-right: none;
+            margin-bottom: 0;
+            padding: 11px;
+        }
+        .bank-input .option a {
+            background-color: #4d59f0;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 0 5px 5px 0;
+            margin-top: 0;
+        }
+        .bank-input .option a:hover {
+            background-color: #3a47c1;
+        }
+        .register-box button {
+            margin-top: 20px;
+            background-color: #4d59f0;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .register-box button:hover {
+            background-color: #3a47c1;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+	<section class="register-section">
+        <h1>Lengkapi Data Anda</h1>
+        <p>Tolong lengkapi data Anda untuk mendanai UMKM</p>
+        <div class="register-box">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input">
+                    <label for="{{ form.ktp.id_for_label }}">Foto KTP</label>
+                    {{ form.ktp }}
+                </div>
+                <div class="input">
+                    <label for="{{ form.foto.id_for_label }}">Foto Investor</label>
+                    {{ form.foto }}
+                </div>
+                <div class="input">
+                    <label for="{{ form.npwp.id_for_label }}">NPWP</label>
+                    {{ form.npwp }}
+                </div>
+                <div class="bank-input">
+                    <label for="{{ form.no_rek.id_for_label }}">Akun Bank</label>
+                    <div class="option">
+                        {{ form.no_rek }}
+                    </div>
+                </div>
+                <button type="submit">Selesai</button>
+            </form>
+        </div>
+	</section>
+{% endblock %}

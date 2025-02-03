@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/investor.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <title>{% block title %}Investor Linkbiz{% endblock %}</title>
+  </head>
+  <body>
+    <div class="sidebar close">
+      <div class="logo-details" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+        {% if profile_investor.foto %}
+          <img
+            src="{{ profile_investor.foto.url }}"
+            alt="profile-img"
+            style="width: 50px; height: 50px; border-radius: 50%; display: block; margin-top: 20px;"
+          />
+        {% else %}
+          <img
+            src="{% static 'assets/LinkBiz.jpg' %}"
+            alt="default-profile-img"
+            style="width: 50px; height: 50px; border-radius: 50%; display: block; margin-top: 20px;"
+          />
+        {% endif %}
+        <span class="logo_name" style="display: block">{{ profile_investor.fullname }}</span>
+      </div>
+            
+      <br />
+      <ul class="nav-links">
+        <li>
+          <a href="{% url 'linkbiz:dashboard' %}">
+            <i class="fas fa-home"></i>
+            <span class="link_name">Beranda</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:dashboard' %}">Dashboard</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'linkbiz:daftarumkm' %}">
+            <i class="fas fa-users"></i>
+            <span class="link_name">UMKM</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:daftarumkm' %}">UMKM</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'linkbiz:portofolio' %}">
+            <i class="fas fa-briefcase"></i>
+            <span class="link_name">Portofolio</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:portofolio' %}">Portofolio</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+            <a href="{% url 'linkbiz:aktivitas' %}">
+              <i class="fas fa-tasks"></i>
+              <span class="link_name">Aktivitas</span>
+            </a>
+            <i class="bx bxs-chevron-down arrow"></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="{% url 'linkbiz:aktivitas' %}">Aktivitas</a></li>
+            <li><a href="{% url 'linkbiz:laporanbulanan' %}">Laporan</a></li>
+            <li><a href="{% url 'linkbiz:kategoritampil' %}">Histori Transaksi</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'linkbiz:profile' %}">
+            <i class="fas fa-user"></i>
+            <span class="link_name">Profil</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:profile' %}">Profil</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'linkbiz:pengaturan' %}">
+            <i class="fas fa-cogs"></i>
+            <span class="link_name">Pengaturan</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:pengaturan' %}">Pengaturan</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'linkbiz:logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="link_name">Logout</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{% url 'linkbiz:logout' %}">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <section class="home-section">
+      <header>
+        <div class="home-content">
+          <i class="bx bx-menu"></i>
+          <img
+            src="{% static 'assets/Home.png' %}"
+            alt="Logo Admin"
+            style="width: auto; height: 70px"
+          />
+        </div>
+        <div class="right_area">
+          <a href="{% url 'linkbiz:notif' %}" class="logonotif"><i class="fas fa-bell"></i></a>
+        </div>
+      </header>
+      <main>
+        {% block content %}
+        {% endblock %}
+      </main>
+    </section>
+
+    <script>
+      let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+          let arrowParent = e.target.parentElement.parentElement;
+          arrowParent.classList.toggle("showMenu");
+        });
+      }
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+      sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Proposal Mitra{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="porto">
+    <h2 style="margin-top: 20px; width: 17%;">Proposal UMKM</h2>
+  
+    <div class="profile-card">
+      <div class="profile">
+        <div class="avatar">
+          <img src="{{ umkm.foto_umkm.url }}" alt="{{ umkm.nama_umkm }}">
+        </div>
+        <div class="info">
+          <h3>{{ umkm.nama_umkm }}</h3>
+              <p>{{umkm.Jenis_umkm}}</p>
+              <p class="location" style="color: red; font-size: 15px;">
+                  <span><i class="fas fa-map-marker-alt"></i></span> {{ umkm.alamat_umkm }}
+              </p>
+        </div>
+      </div>
+      <div class="details">
+        <div class="detail">
+          <p>MODAL</p>
+        <h3>Rp {{ umkm.dana }}</h3>
+        </div>
+        <div class="detail">
+          <p>% BAGI HASIL</p>
+              <h3>{{ umkm.bagi_hasil }}</h3>
+        </div>
+        <div class="detail">
+          <p>TENOR</p>
+              <h3>{{umkm.bagi_hasil}}</h3>
+        </div>
+      </div>
+    </div>
+<div class="proposalmitra5">
+    <a href="{% url 'linkbiz:tentangmitra' umkm.id %}" class="tab">TENTANG UMKM</a>
+    <a href="{% url 'linkbiz:proposalmitra' umkm.id %}" class="tab active">DOKUMEN UMKM</a>
+</div>
+<div class="proposalmitra6">
+  <div class="proposalmitra7">
+      <p><i class="fas fa-file-alt"></i> Proposal Pendanaan</p>
+      <!-- Link untuk mengunduh file proposal -->
+      <a href="{% url 'linkbiz:download_file' 'proposal' umkm.id %}" class="proposalmitrabtn">Unduh</a>
+  </div>
+  <div class="proposalmitra7">
+      <p><i class="fas fa-file-alt"></i> Laporan Keuangan Mitra</p>
+      <!-- Link untuk mengunduh file laporan keuangan -->
+      <a href="{% url 'linkbiz:download_file' 'laporan' umkm.id %}" class="proposalmitrabtn">Unduh</a>
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}

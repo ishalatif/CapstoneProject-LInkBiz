@@ -1,0 +1,60 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Portofolio{% endblock %}
+
+{% block content %}
+{% load humanize %}
+{% load static %}
+<div class="port">
+  <div class="porto">
+    <h2 style="margin-top: 20px">Portofolio</h2>
+    <div class="total-asset">
+      <div class="asset-header">
+        <p>Total Mendanai</p>
+        <h3>Rp {{ total_dana_mendanai|intcomma }}</h3>
+      </div>
+      <div class="asset-footer">
+        <p class="total-profit">
+          Total profit: <span class="profit">Rp 0 </span>
+        </p>
+      </div>
+    </div>
+<br>
+    <div class="full-width-container" style="height: 100vh; overflow-y: auto;">
+      <br>
+      <a href="{% url 'linkbiz:daftarumkm' %}" class="fund-button">Danai Lagi</a>
+      <div class="table-header">
+        <span>Mitra Pendanaan</span>
+      </div>
+      <div class="tbl"></div>
+        <table class="funding-table">
+          <tr>
+            <th>Mitra</th>
+            <th style="text-align: left;">Dana yang Diberikan</th>
+            <th style="text-align: left;">Tanggal Pendanaan</th>
+          </tr>
+          
+          {% for pendanaan in pendanaan_list %}
+          <tr>
+            <td>{{ pendanaan.umkm.nama_umkm }}</td>
+            <td>Rp {{ pendanaan.nominal_dana|intcomma }}</td>
+            <td>{{ pendanaan.tanggal_pendanaan|date:"d F Y" }}</td>
+            {% if else %}
+                Tidak Ada Bukti
+              {% endif %}
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">Anda belum melakukan pendanaan</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+
+      <br /><br />
+    </div>
+  </div>
+</div>
+
+{% endblock %}

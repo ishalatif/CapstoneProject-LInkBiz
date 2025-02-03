@@ -1,0 +1,77 @@
+{% extends 'investor/0baseinvestor.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Ringkasan Transaksi - LinkBiz{% endblock %}
+
+{% block content %}
+<style>
+    .text-title {
+        font-size: 24px;
+        color: #484848;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .transaction-summary {
+        width: 100%;
+        background-color: #ffffff;
+        margin-top: 1cm;
+        font-family: "Poppins", sans-serif;
+        color: #484848;
+    }
+
+    .summary-header {
+        background-color: #E7EBF5;
+        text-align: center;
+        font-size: 20px;
+        color: #484848;
+        font-weight: 600;
+        padding: 10px 0;
+    }
+
+    .summary-content {
+        padding: 20px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        max-width: 80%;
+        margin-left: 10%;
+    }
+
+    .summary-label {
+        font-weight: 500;
+        font-size: 24px;
+    }
+
+    .summary-value {
+        font-weight: 600;
+        font-size: 20px;
+    }
+</style>
+
+<div class="transaction-summary">
+    <div class="summary-header">Ringkasan Transaksi</div>
+    <div class="summary-content">
+        <div class="summary-row">
+            <span class="summary-label">Total Top Up</span>
+            <span class="summary-value">Rp {{ total_top_up|default:"0"|floatformat:"0"|intcomma }}</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Total Penarikan Dana</span>
+            <span class="summary-value">Rp {{ total_penarikan|default:"0"|floatformat:"0"|intcomma }}</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Total Bagi Hasil</span>
+            <span class="summary-value">Rp {{ total_bagi_hasil|default:"0"|floatformat:"0"|intcomma }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

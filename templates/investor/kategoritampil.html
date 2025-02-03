@@ -1,0 +1,90 @@
+{% extends 'investor/0baseinvestor.html' %}
+{% load humanize %}
+
+{% block title %}Pendanaan Aktif - LinkBiz{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="kategompil">
+    <h2 style="margin-top: 20px; width: 17%;">Pendanaan Aktif</h2>
+        <br>
+    <div class="kategompil2">
+        
+        <p>Kamu sedang mendanai</p>
+        <div class="row">
+            <p>Mitra</p>
+            <p class="right-align">Total Profit</p>
+        </div>
+        <div class="row">
+            <h1>{{ jumlah_umkm_didanai|floatformat:"0" }}</h1>
+            <h1 class="right-align" style="color: #4FAA55;">
+                Rp {{ totalprofit|default:"0"|floatformat:"0"|intcomma }}
+            </h1>
+        </div>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <!-- Header Tabel -->
+        <thead>
+            <tr style="background-color: #f0f0f0;">
+                <th style="padding: 10px; border: 1px solid #ccc; text-align: left;">Kategori Mitra</th>
+                <th style="padding: 10px; border: 1px solid #ccc; text-align: center;">UMKM</th>
+                <th style="padding: 10px; border: 1px solid #ccc; text-align: center;">Tambahan Denda</th>
+                <th style="padding: 10px; border: 1px solid #ccc; text-align: right;">Dana Yang Diterima</th>
+            </tr>
+        </thead>
+        <!-- Body Tabel -->
+        <tbody>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ccc;">Mitra Lancar</td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">
+                    {{ jumlah_umkm_didanai_lancar|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center; color: #4FAA55;">
+                    Rp 0
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: right; color: #4FAA55;">
+                    Rp {{ profit_lancar|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ccc;">Terlambat 30-60 Hari</td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">
+                    {{ jumlah_umkm_didanai_terlambat_30_60|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center; color: red;">
+                    Rp {{ total_terlambat_30_60|default:"0"|floatformat:"0"|intcomma }} (2%) / Bulan
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: right; color: red;">
+                    Rp {{ profit_terlambat_30_60|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ccc;">Terlambat 61-90 Hari</td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">
+                    {{ jumlah_umkm_didanai_terlambat_61_90|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center; color: red;">
+                    Rp {{ total_terlambat_61_90|default:"0"|floatformat:"0"|intcomma }} (5%) / Bulan
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: right; color: red;">
+                    Rp {{ profit_terlambat_61_90|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ccc;">Kurang Lancar > 90 Hari</td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">
+                    {{ jumlah_umkm_didanai_kurang_lancar|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: center; color: red;">
+                    Rp {{ total_kurang_lancar|default:"0"|floatformat:"0"|intcomma }} (10%) / Bulan
+                </td>
+                <td style="padding: 10px; border: 1px solid #ccc; text-align: right; color: red;">
+                    Rp {{ profit_kurang_lancar|default:"0"|floatformat:"0"|intcomma }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}

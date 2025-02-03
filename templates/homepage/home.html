@@ -1,0 +1,80 @@
+{% extends 'homepage/0base.html' %}
+
+{% block title %}Beranda - LinkBiz{% endblock %}
+
+{% block content %}
+<div class="home">
+  {% load static %}
+  
+  <section>
+    <div class="home1">
+      <div class="home2">
+        <div class="home3">
+          <h1>Connect, Grow, Succeed<br />With LinkBiz!</h1>
+          <p>
+            LinkBiz adalah platform online yang menghubungkan para investor
+            dengan pemilik usaha UMKM yang membutuhkan modal, di mana pelaku
+            usaha dapat mengunggah proposal lengkap dengan detail penggunaan
+            dana serta kesediaan untuk menyampaikan laporan keuangan bulanan
+            disertai bukti-bukti konkrit.
+          </p>
+          <button>Lihat Layanan Kami</button>
+        </div>
+        <div class="home4">
+        <img src="{% static 'assets/Desain tanpa judul (7).png' %}" alt="Handshake">
+      </div>
+    </div>
+  </div>
+
+  <div class="ojk-section">
+    <h2>Berizin dan diawasi oleh :</h2>
+    <img src="{% static 'assets/Desain tanpa judul (8).png' %}" alt="OJK Logo">
+  </div>
+
+  <section class="benefits-section">
+    <h2 class="manfaatkami">Manfaat Kami</h2>
+    <br>
+    <div class="benefits-container">
+      <div class="benefit-box">
+        <h3>Pendana</h3>
+        <ul>
+          <li>Modal Usaha dengan Syarat Fleksibel</li>
+          <li>Meningkatkan Reputasi Usaha</li>
+          <li>Bantuan Pengelolaan Keuangan yang Profesional</li>
+          <li>Kesempatan Uji Coba Produk Baru</li>
+          <li>Saran dan Informasi dari Komunitas dan Teknologi Finansial</li>
+        </ul>
+      </div>
+
+      <div class="benefit-box">
+        <h3>Pemberi Modal</h3>
+        <ul>
+          <li>Menghasilkan Passive Income</li>
+          <li>Diversifikasi Investasi pada Berbagai UMKM</li>
+          <li>Potensi Keuntungan Lebih Tinggi</li>
+          <li>Mendukung Pertumbuhan UMKM Lokal</li>
+          <li>Akses Laporan Keuangan dan Performa Usaha secara Berkala</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="layanan-section">
+    <h2>Layanan Kami</h2>
+    <div class="layanan-container">
+      <div class="layanan-box">
+        <h3>Pendanaan</h3>
+        <br>
+        <p>Dapatkan pendanaan cepat dan aman untuk bisnis Anda</p>
+      </div>
+      <div class="layanan-box">
+        <h3>Suku Bunga yang Kompetitif</h3>
+        <p>Manfaatkan suku bunga dan bersaing untuk meningkatkan keuntungan Anda</p>
+      </div>
+      <div class="layanan-box">
+        <h3>Pembayaran Fleksibel dan Mudah</h3>
+        <p>Atur pembayaran sesuai dengan keuntungan dan kemampuan Anda.</p>
+      </div>
+    </div>
+  </section>
+  </div>
+{% endblock %}

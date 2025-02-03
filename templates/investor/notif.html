@@ -1,0 +1,194 @@
+
+{% extends 'investor/0baseinvestor.html' %}
+{% load static %}
+{% block title %}Notifikasi - LinkBiz{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+    }
+    .section1 {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 16px;
+  margin-top: 0.5cm;
+}
+
+.highlight-title {
+  font-size: 24px;
+  color: #484848;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.buble-container {
+  display: flex;
+  gap: 30px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.bubble {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 25px;
+  background-color:rgba(203, 215, 255, 0.39);
+  border-radius: 28px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 460px;
+}
+.megaphone-icon {
+  width: 40x;
+  height: 40px;
+}
+
+.button-text {
+  font-size: 16px;
+  color: #484848;
+  font-family: "Poppins", sans-serif;
+}
+.section2 {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 16px;
+  margin-left: 0.5cm;
+}
+.section2-title {
+  font-size: 24px;
+  color: #484848;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+.buble-container2 {
+width: 100%;
+margin-left: -25px;
+margin-top: -25px;
+display: flex; 
+align-items: center; 
+}
+.linkbiz-img2 {
+width: 150px;
+height: 150px;
+}
+
+.buble2 {
+flex: 1; /* Bubble mengisi ruang yang tersedia */
+display: flex;
+align-items: flex-start;
+padding: 20px 25px;
+background-color: rgba(203, 215, 255, 0.39);
+border-radius: 28px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+width: 1250px;
+margin-left: -20px;
+}
+.button-text2 {
+font-size: 16px;
+color: #484848;
+font-family: "Poppins", sans-serif;
+}
+
+.notif-date {
+font-size: 10px;
+color: #484848;
+font-family: "Poppins", sans-serif;
+font-weight: 600;
+margin-left: 120px;
+margin-top: -40px;
+margin-bottom: 10px;
+}
+</style>
+
+<!-- Main Content -->
+<div class="section1">
+    <div class="highlight-title">Highlights</div>
+    <div class="buble-container">
+      <div class="bubble">
+        <img src="https://img.icons8.com/ios-filled/50/megaphone.png" alt="Megaphone" class="megaphone-icon">
+        <span class="button-text">Layanan LinkBiz akan mengalami perawatan sistem pada 25 Desember 2024 pukul 23.00 WIB</span>
+      </div>
+      <div class="bubble">
+        <img src="https://img.icons8.com/ios-filled/50/megaphone.png" alt="Megaphone" class="megaphone-icon">
+        <span class="button-text">Promo Spesial! Dapatkan cashback hingga 10% untuk transaksi pertama Anda di bulan ini.</span>
+      </div>
+      <div class="bubble">
+        <img src="https://img.icons8.com/ios-filled/50/megaphone.png" alt="Megaphone" class="megaphone-icon">
+        <span class="button-text">Eksplorasi peluang baru! Mitra 'Dua Putri' kini tersedia di LinkBiz. Mulai danai dan raih keuntungan lebih.</span>
+      </div>
+    </div>
+</div>
+
+<div class="section2">
+    <div class="section2-title">Notifikasi</div>
+    {% for notification in notifications %}
+        {% if "Anda mengirim komentar" in notification.text %}
+            <!-- Komentar manual -->
+            <div class="buble-container2">
+                <img src="{% static 'assets/logoringkasan.png' %}" alt="LinkBiz" class="linkbiz-img2">
+                <div class="buble2">
+                    <div class="button-text2">
+                        {{ notification.text }}
+                    </div>
+                </div>
+            </div>
+            <div class="notif-date">{{ notification.created_at|date:"d F Y" }}</div>
+        {% else %}
+            <!-- Notifikasi dengan tautan -->
+            <div class="buble-container2">
+                <img src="{% static 'assets/logoringkasan.png' %}" alt="LinkBiz" class="linkbiz-img2">
+                <div class="buble2">
+                    <div class="button-text2">
+                        {{ notification.text }}
+                        {% if "Berhasil berinvestasi" in notification.text %}
+                            <a href="{% url 'linkbiz:portofolio' %}" target="_blank">Cek detailnya disini!</a>
+                        {% else %}
+                            <a href="{% url 'linkbiz:kategoritampil' %}" target="_blank">Cek detailnya disini!</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="notif-date">{{ notification.created_at|date:"d F Y" }}</div>
+        {% endif %}
+    {% endfor %}
+  </div>
+
+<script>
+    // Sidebar toggle functionality
+    let arrow = document.querySelectorAll(".arrow");
+    for (let i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement;
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+    });
+</script>
+{% endblock %} 

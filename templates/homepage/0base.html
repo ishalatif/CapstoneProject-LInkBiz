@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{% block title %}LinkBiz - Connect, Grow, Succeed{% endblock %}</title>
+    {% block head_register1 %}
+    {% endblock %}
+    {% block head_register2 %}
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo-container">
+            <a href="{% url 'linkbiz:home' %}">
+              <img src="{% static 'assets/LinkBiz1.jpg' %}" alt="LinkBiz Logo" class="logo" />
+            </a>
+            <span class="logo-text">LinkBiz</span>
+          </div>
+        <ul class="navbar-menu">
+          <li><a href="{% url 'linkbiz:home' %}">Home</a></li>
+            <li><a href="{% url 'linkbiz:about' %}">Tentang Kami</a></li>
+            <li><a href="{% url 'linkbiz:pusban' %}">Pusat Bantuan</a></li>
+            <li><a href="{% url 'linkbiz:snk' %}">Syarat dan Ketentuan</a></li>
+        </ul>
+        <div class="login-button">
+          <a class="button" href="{% url 'linkbiz:login' %}">MASUK</a>
+        </div>
+      </nav>
+    </header>
+
+    {% if messages %}
+      <div>
+          {% for message in messages %}
+              <p class="alert {{ message.tags }}">{{ message }}</p>
+          {% endfor %}
+      </div>
+    {% endif %}
+
+
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-logo">
+          <img src="{% static 'assets/LOGO LINKBIZ FIX.png' %}" alt="LinkBiz Logo" />
+        </div>
+        <nav class="footer-nav">
+          <a href="{% url 'linkbiz:home' %}">Home</a>
+        <a href="{% url 'linkbiz:about' %}">Tentang Kami</a>
+        <a href="{% url 'linkbiz:pusban' %}">Pusat Bantuan</a>
+        <a href="{% url 'linkbiz:snk' %}">Syarat dan Ketentuan</a>
+        </nav>
+        <div class="footer-social">
+          <a href="tel:+628123456789"><i class="fas fa-phone"></i></a>
+          <a href="mailto:info@linkbiz.com"><i class="fas fa-envelope"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="footer-copy">
+          <p>© LinkBiz, All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

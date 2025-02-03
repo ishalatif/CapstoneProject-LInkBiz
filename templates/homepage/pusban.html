@@ -1,0 +1,224 @@
+{% extends 'homepage/0base.html' %}
+
+{% load static %}  <!-- Pastikan tag ini ada di sini -->
+
+{% block title %}Pusat Bantuan - LinkBiz{% endblock %}
+
+{% block content %}
+<div class="pussban">
+<div class="pusban">
+  <div class="pusban-container">
+      <h1>Hai, ada yang bisa dibantu?</h1>
+      <hr>
+      <div class="button-container">
+        <a href="#" class="btn" onclick="showPopup('popup-informasi-umum')">
+          <img src="{% static 'assets/Informasi Umum.jpg' %}" alt="Informasi Umum" />
+        </a>
+        <a href="#" class="btn" onclick="showPopup('popup-pendanaan')">
+          <img src="{% static 'assets/Pelajari Tentang Pendanaan.jpg' %}" alt="Pelajari Tentang Pendanaan" />
+        </a>
+        <a href="#" class="btn" onclick="showPopup('popup-linkbiz')">
+          <img src="{% static 'assets/Pelajari Tentang LinkBiz.jpg' %}" alt="Pelajari Tentang LinkBiz" />
+        </a>
+        <a href="#" class="btn" onclick="showPopup('popup-umkm')">
+          <img src="{% static 'assets/Pelajari Tentang UMKM.jpg' %}" alt="Pelajari Tentang UMKM" />
+        </a>
+        <a href="#" class="btn" onclick="showPopup('popup-resiko')">
+          <img src="{% static 'assets/Informasi Resiko Pendanaan.jpg' %}" alt="Informasi Resiko Pendanaan" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Pop-ups -->
+    <div class="popup" id="popup-informasi-umum">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup('popup-informasi-umum')">&times;</span>
+            <h1>Informasi Umum</h1>
+            <p>Informasi yang Anda perlu ketahui mengenai pendanaan di LinkBiz.</p>
+    
+            <!-- Dropdown 1 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-info1', this)">
+                    <strong>Apa yang saya dapatkan?</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-info1">
+                    <p>Peluang untuk menyimpan dan bahkan dapat memperkembangkan uang anda dengan cara berinvestasi kepada UMKM. Dengan mendanai UMKM melalui LinkBiz, anda secara otomatis ikut serta dalam membangun perekonomian di Indonesia. Dengan keuntungan yang anda dapatkan adalah sejumlah keuntungan dari penjualan dengan sistem bagi hasil antara anda dengan pelaku usaha (UMKM).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="popup-pendanaan">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup('popup-pendanaan')">&times;</span>
+            <h1>Pelajri Tentang Pendanaan</h1>
+            <p>Pelajari lebih lanjut tentang pendanaan melalui LinkBiz.</p>
+    
+            <!-- Dropdown 1 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-pendanaan1', this)">
+                    <strong>Berapa nilai minumum investasi melalui LinkBiz</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-pendanaan1">
+                    <p></p>Berinvestasi atau mendanai UMKM melalui LinkBiz dapat dimulai dengan minimum nilai Rp 100.000.</p>
+                </div>
+            </div>
+    
+            <!-- Dropdown 2 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-pendanaan2', this)">
+                    <strong>Dimana saya dapat melihat riwayat investasi?</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-pendanaan2">
+                    <p>Semua investor memiliki akun dengan dashboard. Klik (LINK BALIK KE LAMAN BERANDA OR LOGIN) untuk masuk ke akun Anda dan melihat dashboard Anda. Pada dashboard, Anda bisa melihat jumlah total uang yang telah Anda gunakan untuk mendanai pinjaman dan yang telah Anda hasilkan. Anda bisa juga mengetahui sisa pokok Anda pada setiap pendanaan aktif jika mau.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="popup-linkbiz">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup('popup-linkbiz')">&times;</span>
+            <h1>Pelajari Tentang LinkBiz</h1>
+            <p>Pelajari lebih lanjut tentang platform LinkBiz.</p>
+    
+            <!-- Dropdown 1 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-linkbiz1', this)">
+                    <strong>Apa itu LinkBiz?</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-linkbiz1">
+                    <p>LinkBiz adalah platform online yang menghubungkan para investor dengan pemilik usaha UMKM yang membutuhkan modal, di mana pelaku usaha dapat mengunggah proposal lengkap dengan detail penggunaan dana serta kesediaan untuk menyampaikan laporan keuangan bulanan disertai bukti-bukti konkrit.</p>
+                </div> 
+            </div>
+            <!-- Dropdown 2 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-linkbiz2', this)">
+                    <strong>Apa keunggulan Linkbiz?</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-linkbiz2">
+                     <p>1.LinkBiz mencari dan memilih UMKM secara langsung dan mempertimbangkan usaha yang perlu bantuan dana.<br>
+                        2.LinkBiz memberikan informasi laporan keuangan kepada investor secara transparansi agar investor dapat mengetahui secara langsung.<br>
+                        3.LinkBiz telah bekerjasama dengan lembaga terkait.<br>
+                        4.LinkBiz memfasilitasi pinjaman untuk UMKM yang membutuhkan dana guna mendukung usaha mereka dan membuka lapangan pekerjaan.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="popup-umkm">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup('popup-umkm')">&times;</span>
+            <h1>Pelajari tentang UMKM</h1>
+            <p>Informasi tentang UMKM yang dapat Anda danai.</p>
+    
+             <!-- Dropdown 1 -->
+             <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-umkm1', this)">
+                    <strong>Profil Pecel Lele Surabaya</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-umkm1">
+                    <p>Pecel lele Surabaya telah berjualan mulai tahun 1845, sekarang sudah ditangan generasi ke-4. Didirikan oleh Almarhum Pak Tedjo. Dulu pecel lele Surabaya berjualan dengan cara keliling namun sekarang telah dapat menyewa stand di Pasar Manyar dengan penghasilan setiap harinya Rp 500.000 - Rp 2.000.000. Mereka berencana untuk membuka outlet di pinggir jalan namun kehambat oleh biaya.</p>
+                </div> 
+            </div>
+            <!-- Dropdown 2 -->
+            <div class="dropdown">
+                <div class="dropdown-header" onclick="toggleDropdown('dropdown-umkm2', this)">
+                    <strong>Profil Kue Lapis Surabaya</strong>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-umkm2">
+                    <p>Kue Lapis Surabaya adalah usaha UMKM lokal yang menyediakan kue tradisional dengan kualitas tinggi, dan saat ini membutuhkan dana tambahan untuk memperluas bisnis mereka.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="popup-resiko">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup('popup-resiko')">&times;</span>
+            <h1>Informasi Resiko Pendanaan</h1>
+            <p>Pelajari lebih lanjut tentang risiko pendanaan.</p>
+    
+                    <!-- Dropdown 1 -->
+                    <div class="dropdown">
+                        <div class="dropdown-header" onclick="toggleDropdown('dropdown-resiko1', this)">
+                            <strong>Apa itu Resiko Pendanaan?</strong>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="dropdown-content" id="dropdown-resiko1">
+                            <p>Risiko pendanaan bagi Usaha Mikro, Kecil, dan Menengah (UMKM) meliputi risiko kredit, risiko likuiditas, risiko operasional, risiko pasar, risiko regulasi, risiko inflasi, risiko suku bunga, risiko akses modal, dan risiko reputasi.</p>
+                        </div> 
+                    </div>
+                    <!-- Dropdown 2 -->
+                    <div class="dropdown">
+                        <div class="dropdown-header" onclick="toggleDropdown('dropdown-resiko2', this)">
+                            <strong>Apa yang dilakukan jika keuntungan tidak dibagi pelaku usaha?</strong>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="dropdown-content" id="dropdown-resiko2">
+                            <p>LinkBiz berupaya mengidentifikasi masalah sejak awal melalui proses monitoring berkala, memberi peringatan, dan mengambil langkah solusi melalui penjadwalan ulang atau restrukturisasi pinjaman jika perlu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <script>
+        
+                function showContent(sectionId) {
+                  const allContent = document.querySelectorAll(".additional-content");
+                  allContent.forEach((content) => content.style.display = "none");
+                  const selectedContent = document.getElementById(sectionId);
+                  selectedContent.style.display = "block";
+                }
+              
+                let openedDropdown = null;
+              
+              function toggleDropdown(dropdownId, headerElement) {
+                  const dropdownContent = document.getElementById(dropdownId);
+                  const arrow = headerElement.querySelector(".arrow");
+              
+                  if (openedDropdown && openedDropdown !== dropdownContent) {
+                      openedDropdown.style.display = "none";
+                      const openedHeader = document.querySelector(".dropdown-header.active");
+                      if (openedHeader) {
+                          openedHeader.classList.remove("active");
+                          openedHeader.querySelector(".arrow").textContent = "▼";
+                      }
+                  }
+              
+                  if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+                      dropdownContent.style.display = "block";
+                      arrow.textContent = "▲";
+                      headerElement.classList.add("active");
+                      openedDropdown = dropdownContent;
+                  } else {
+                      dropdownContent.style.display = "none";
+                      arrow.textContent = "▼";
+                      headerElement.classList.remove("active");
+                      openedDropdown = null;
+                  }
+              }
+              
+                      function showPopup(popupId) {
+                          document.getElementById(popupId).style.display = 'flex';
+                      }
+              
+                      function closePopup(popupId) {
+                          document.getElementById(popupId).style.display = 'none';
+                      }
+                      function toggleDropdown(dropdownId, element) {
+                  const content = document.getElementById(dropdownId);
+                  const isVisible = content.style.display === 'block';
+                  const arrow = element.querySelector('.arrow');
+                  content.style.display = isVisible ? 'none' : 'block';
+                  arrow.textContent = isVisible ? '▼' : '▲';
+              }
+                  </script>
+{% endblock %}

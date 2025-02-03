@@ -1,0 +1,205 @@
+{% extends 'investor/0baseinvestor.html' %}
+
+{% block title %}Withdraw{% endblock %}
+
+{% block content %}
+{% load humanize %}
+{% load static %}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<div class="wd">
+    <div class="withdraw-container">
+        <h1>Formulir Penarikan</h1>
+        <hr>
+
+        <!-- Form untuk Penarikan -->
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="jumlah">Jumlah Uang:</label>
+                {{ form.jumlah_tarik }}  <!-- Menampilkan field jumlah_tarik -->
+                <p style="margin-bottom: 0; margin-top: 5px; color: red; font-size: 0.8rem;">
+                    <a href="{% url 'linkbiz:kategoritampil' %}" style="font-size: 0.8rem;">Klik disini</a>
+                    jika ingin melihat jumlah dana yang akan ditarik oleh Anda
+                </p>
+                {% if form.jumlah_tarik.errors %}
+                    <div class="error-message">
+                        {% for error in form.jumlah_tarik.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="rekening">Nomor Rekening Tujuan:</label>
+                {{ form.rekening_tujuan }}  <!-- Menampilkan field rekening_tujuan -->
+                {% if form.rekening_tujuan.errors %}
+                    <div class="error-message">
+                        {% for error in form.rekening_tujuan.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Tarik Uang</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .wd {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .withdraw-container {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background-color: #fafafa;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    button {
+        padding: 14px 24px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message p {
+        font-size: 14px;
+        color: red;
+        margin-top: 5px;
+    }
+
+    .status-container {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        color: #333;
+    }
+
+    .status-container h2 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    #status-message {
+        font-size: 16px;
+        color: #888;
+    }
+
+    /* Media Queries untuk tampilan responsif */
+    @media (max-width: 768px) {
+        .withdraw-container {
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        button {
+            font-size: 14px;
+            padding: 10px 18px;
+        }
+    }
+</style>
+
+<script>
+    // Format nominal dengan titik separator ribuan
+    function formatNominal(input) {
+        let value = input.value.replace(/[^\d]/g, '');
+        if (value.length > 3) {
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        input.value = value;
+    }
+
+    const form = document.querySelector('form');
+</script>
+
+{% endblock %}

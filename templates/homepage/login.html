@@ -1,0 +1,89 @@
+{% extends 'homepage/0base.html' %}
+
+{% block title %}Login - LinkBiz{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    .login-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        background-color: #ffffff;
+        margin-top: 70px;
+    }
+    .login-box {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .login-box h1 {
+        font-size: 1.5rem;
+        color: #4d59f0;
+    }
+    .login-box label {
+        display: block;
+        text-align: left;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #4d59f0;
+    }
+    .login-box input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    .login-button1 {
+        background-color: #4d59f0;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+    }
+    .login-button1:hover {
+        background-color: #303ef1;
+    }
+    .login-box p {
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+    .login-box a {
+        color: #4d59f0;
+        text-decoration: none;
+    }
+    .login-box a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<section class="login-section">
+    <div class="login-box">
+        <h1>LOGIN</h1>
+        <form action="{% url 'linkbiz:login' %}" method="POST">
+            {% csrf_token %}
+            
+            <label for="username">Email</label>
+            <input type="text" id="email" name="email" placeholder="Masukkan Email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
+
+            <button type="submit" class="login-button1">Login</button>
+        </form>
+        <p>Belum punya akun? <a href="{% url 'linkbiz:register_first' %}">Daftar di sini</a></p>
+        <p>Lupa Password? <a href="{% url 'linkbiz:lupa_password' %}">Ganti di sini</a></p>
+    </div>
+</section>
+{% endblock %}
